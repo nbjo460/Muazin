@@ -1,6 +1,7 @@
 from pathlib import Path
 from config import MetadataConfig
 import config
+import json
 
 class Manager:
     def __init__(self):
@@ -10,12 +11,25 @@ class Manager:
 
     def _control_metadata(self):
         podcasts_list = self._get_list_of_files()
-        for podcast in podcasts_list:
-            self._get_metadata_on_file(podcast)
+        for podcast_path in podcasts_list:
+            metadata = self._get_metadata_on_file(podcast_path)
+            file_info = self._merge_metadata_and_path_to_json(metadata, podcast_path)
+            print(file_info)
+
+
+    def _merge_metadata_and_path_to_json(self, metadata : dict, file_path : Path):
+        """
+        :param metadata: the metadata of the file
+        :param file_path: the path of the file
+        :return: json
+        """
+        file_info = {str(file_path) : metadata}
+        json_file_info = json.dumps(file_info)
+        return json_file_info
 
 
 
-    def _get_list_of_files(self):
+    def _get_list_of_files(self) -> list:
         """
         return list of all podcasts path
         :return: list
@@ -24,7 +38,7 @@ class Manager:
         return podcasts_list
 
     @staticmethod
-    def _get_metadata_on_file(file_path : Path):
+    def _get_metadata_on_file(file_path : Path) -> dict:
         """
         return size, name, creation data, last modification date of file, as dictionary.
         :param file_path:  Path of file
