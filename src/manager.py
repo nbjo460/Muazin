@@ -23,7 +23,13 @@ class Manager:
         podcasts_list = list(Path(self.podcasts_path).iterdir())
         return podcasts_list
 
-    def _get_metadata_on_file(self, file_path : Path):
+    @staticmethod
+    def _get_metadata_on_file(file_path : Path):
+        """
+        return size, name, creation data, last modification date of file, as dictionary.
+        :param file_path:  Path of file
+        :return:
+        """
         metadata = {}
         file_stat = file_path.stat()
         metadata[MetadataConfig.SIZE] = file_stat.st_size
