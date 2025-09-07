@@ -14,3 +14,9 @@ class KafkaConfig:
 
 class Errors:
     NO_BROKER_CONNECTION = "No broker connection."
+
+class ElasticSearchConfig:
+    ELASTIC_PORT = "9200"
+    ELASTIC_HOST = "http://localhost:"
+    ELASTIC_URL = ELASTIC_HOST + ELASTIC_PORT
+    INDEX_NAME = "podcasts"
