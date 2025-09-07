@@ -1,67 +1,19 @@
-from pathlib import Path
-from config import MetadataConfig
-from config import KafkaConfig
-from datetime import datetime
-from kafka_util import producer
-import config
-import json
+from src.data_export import DataExport
+from src.utils.kafka_util import consumer
+from src.utils import config
 
 class Manager:
     def __init__(self):
         self.podcasts_path = config.WAV_FILES_PATH
+        self.data_retrieve = DataExport(self.podcasts_path)
+        self.consumer = consumer.Consumer()
+
     def run(self):
-        self._control_metadata()
 
-    def _control_metadata(self):
-        podcasts_list = self._get_list_of_files()
-        for podcast_path in podcasts_list:
-            metadata = self._get_metadata_on_file(podcast_path)
-            json_file_info = self._merge_metadata_and_path_to_json(metadata, podcast_path)
-            self._sent_to_info_kafka(file_info=json_file_info)
-
-    @staticmethod
-    def _merge_metadata_and_path_to_json(metadata : dict, file_path : Path):
-        """
-        :param metadata: the metadata of the file
-        :param file_path: the path of the file
-        :return: json
-        """
-        file_info = {str(file_path) : metadata}
-        json_file_info = json.dumps(file_info)
-        return json_file_info
-
-    def _get_list_of_files(self) -> list:
-        """
-        return list of all podcasts path
-        :return: list
-        """
-        podcasts_list = list(Path(self.podcasts_path).iterdir())
-        return podcasts_list
-
-    @staticmethod
-    def _sent_to_info_kafka(file_info : json):
-        produce = producer.get_producer_config()
-        succeed = producer.publish_message(producer=produce, topic=KafkaConfig.SENT_FILE_DATA_TOPIC, message=file_info)
-        return succeed
-
-    @staticmethod
-    def _get_metadata_on_file(file_path : Path) -> dict:
-        """
-        return size, name, creation data, last modification date of file, as dictionary.
-        :param file_path:  Path of file
-        :return:
-        """
-        metadata = {}
-        file_stat = file_path.stat()
+        self.data_retrieve.create_metadata()
+        self._get_data()
 
 
-        metadata[MetadataConfig.SIZE] = file_stat.st_size
-        metadata[MetadataConfig.CREATION_DATE] = Manager._convert_timestamp_to_datetime(file_stat.st_ctime)
-        metadata[MetadataConfig.LAST_MODIFICATION] = Manager._convert_timestamp_to_datetime(file_stat.st_mtime)
-        metadata[MetadataConfig.NAME] = file_path.name
+    def _get_data(self):
+        self.consumer.listen_topic()
 
-        return metadata
-
-    @staticmethod
-    def _convert_timestamp_to_datetime(timestamp):
-        return str(datetime.fromtimestamp(timestamp))
