@@ -1,7 +1,8 @@
 from pathlib import Path
 from config import MetadataConfig
+from config import KafkaConfig
 from datetime import datetime
-
+from kafka_util import producer
 import config
 import json
 
@@ -16,10 +17,10 @@ class Manager:
         for podcast_path in podcasts_list:
             metadata = self._get_metadata_on_file(podcast_path)
             json_file_info = self._merge_metadata_and_path_to_json(metadata, podcast_path)
-            print(json_file_info)
+            self._sent_to_info_kafka(file_info=json_file_info)
 
-
-    def _merge_metadata_and_path_to_json(self, metadata : dict, file_path : Path):
+    @staticmethod
+    def _merge_metadata_and_path_to_json(metadata : dict, file_path : Path):
         """
         :param metadata: the metadata of the file
         :param file_path: the path of the file
@@ -29,8 +30,6 @@ class Manager:
         json_file_info = json.dumps(file_info)
         return json_file_info
 
-
-
     def _get_list_of_files(self) -> list:
         """
         return list of all podcasts path
@@ -38,6 +37,12 @@ class Manager:
         """
         podcasts_list = list(Path(self.podcasts_path).iterdir())
         return podcasts_list
+
+    @staticmethod
+    def _sent_to_info_kafka(file_info : json):
+        produce = producer.get_producer_config()
+        succeed = producer.publish_message(producer=produce, topic=KafkaConfig.SENT_FILE_DATA_TOPIC, message=file_info)
+        return succeed
 
     @staticmethod
     def _get_metadata_on_file(file_path : Path) -> dict:
