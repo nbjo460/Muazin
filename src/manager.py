@@ -13,8 +13,7 @@ class Manager:
         podcasts_list = self._get_list_of_files()
         for podcast_path in podcasts_list:
             metadata = self._get_metadata_on_file(podcast_path)
-            file_info = self._merge_metadata_and_path_to_json(metadata, podcast_path)
-            print(file_info)
+            json_file_info = self._merge_metadata_and_path_to_json(metadata, podcast_path)
 
 
     def _merge_metadata_and_path_to_json(self, metadata : dict, file_path : Path):
