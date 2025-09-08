@@ -64,7 +64,20 @@ class DAL:
         except errors.FileExists:
             self.logger.warning(f"FILE {file_name} ALREADY EXISTS, NOT UPLOADED AGAIN")
 
+    def download_file(self, _id, file_path, file_name):
+        full_path =Path(file_path)/file_name
+        try:
+            self.logger.info(f"Uploading {file_name}")
+            with open(file_path, 'wb') as file:
+                with self.fs.open_upload_stream_with_id(_id, filename=file_name) as fs_stream:
+                    fs_stream.write(file)
+            self.logger.info(f"Uploaded {file_name}")
+        except errors.FileExists:
+            self.logger.warning(f"FILE {file_name} ALREADY EXISTS, NOT UPLOADED AGAIN")
+        except Exception as e:
+            print(e)
 
-# if __name__ == "__main__":
-#     dal = DAL()
+if __name__ == "__main__":
+    dal = DAL()
+    dal.download_file("2", "c:/e", "r.t")
 #     dal.upload_file(r"C:\Users\Menachem\Desktop\Galil\Muazin\data\podcasts\download (6).wav", "5d41402abc4b2a76b9719d911017c592")
