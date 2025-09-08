@@ -8,7 +8,7 @@ from src.utils.logger import Logger
 class DAL:
     def __init__(self):
         self.logger = Logger().get_logger()
-        db_name = MongoDBConfig.DB_NAME
+        db_name = MongoDBConfig.MONGO_DB_NAME
         client = self._set_client()
         self.db = client[db_name]
         self.fs = GridFSBucket(self.db)
@@ -31,12 +31,12 @@ class DAL:
         And by check if user&pass exists, or not.
         :return: URI of mongo.
         """
-        user_name = MongoDBConfig.USER_NAME
-        password = MongoDBConfig.PASSWORD
+        user_name = MongoDBConfig.MONGO_USER_NAME
+        password = MongoDBConfig.MONGO_PASSWORD
 
-        host = MongoDBConfig.HOST
-        port= MongoDBConfig.PORT
-        prefix = f"{MongoDBConfig.PREFIX}://"
+        host = MongoDBConfig.MONGO_HOST
+        port= MongoDBConfig.MONGO_PORT
+        prefix = f"{MongoDBConfig.MONGO_PREFIX}://"
         if  user_name and password:
             return f"{prefix}{user_name}:{password}@{host}:{port}"
         else:

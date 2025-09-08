@@ -8,7 +8,7 @@ from src.utils.logger import Logger
 
 class Manager:
     def __init__(self):
-        self.podcasts_path = config.WAV_FILES_PATH
+        self.podcasts_path = config.General.WAV_FILES_PATH
         self.data_export = DataExport(self.podcasts_path)
         self.data_retriever = DataRetriever()
         self.logger = Logger().get_logger()
