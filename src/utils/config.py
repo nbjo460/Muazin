@@ -45,3 +45,6 @@ class LoggingConfig:
 
 class SttConfig:
     MODEL_PATH = os.getenv("MODEL_PATH", r"C:\Users\Menachem\Desktop\Galil\Muazin\data\model\vosk-model-small-en-us-0.15")
+
+class DataRetrieverConfig:
+    TRANSCRIPT = "transcript"
