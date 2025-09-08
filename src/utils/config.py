@@ -42,3 +42,5 @@ class MongoDBConfig:
 class LoggingConfig:
     LOGGER_NAME = "Podcast_logger"
     INDEX_LOGS_NAME = "index_logs_name"
+class SttConfig:
+    MODEL_PATH = os.getenv("MODEL_PATH", r"C:\Users\Menachem\Desktop\Galil\Muazin\data\model\vosk-model-small-en-us-0.15")
