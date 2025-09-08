@@ -7,11 +7,11 @@ from src.utils.logger import Logger
 
 class DAL:
     def __init__(self):
+        self.logger = Logger().get_logger()
         db_name = MongoDBConfig.DB_NAME
         client = self._set_client()
         self.db = client[db_name]
         self.fs = GridFSBucket(self.db)
-        self.logger = Logger.get_logger()
 
     def _set_client(self):
         self.logger.info("Create Connection")
@@ -45,10 +45,11 @@ class DAL:
     def upload_file(self, file_path, _id):
         file_name = Path(file_path).name
         try:
+            self.logger.info(f"Uploading {file_name}")
             with open(file_path, 'rb') as file:
                 with self.fs.open_upload_stream_with_id(_id, filename=file_name) as fs_stream:
                     fs_stream.write(file)
-                    self.logger.info(f"Uploaded {file_name}")
+            self.logger.info(f"Uploaded {file_name}")
         except errors.FileExists:
             self.logger.warning(f"FILE {file_name} ALREADY EXISTS, NOT UPLOADED AGAIN")
 
