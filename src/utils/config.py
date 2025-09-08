@@ -14,3 +14,17 @@ class KafkaConfig:
 
 class Errors:
     NO_BROKER_CONNECTION = "No broker connection."
+
+class ElasticSearchConfig:
+    ELASTIC_PORT = "9200"
+    ELASTIC_HOST = "http://localhost:"
+    ELASTIC_URL = ELASTIC_HOST + ELASTIC_PORT
+    INDEX_NAME = "podcasts"
+class MongoDBConfig:
+    HOST = "localhost"
+    PORT = "27017"
+    USER_NAME = None
+    PASSWORD = None
+    IS_ATLAS = False
+    PREFIX = "mongodb+srv" if IS_ATLAS else "mongodb"
+    DB_NAME = "Podcasts"
