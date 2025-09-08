@@ -16,11 +16,13 @@ class DataExport:
     def create_metadata(self):
         podcasts_list = self._get_list_of_files()
         self.logger.info(f"Start sent {len(podcasts_list)} files")
+        succeeded_sum = 0
         for podcast_path in podcasts_list:
             metadata = self._get_metadata_on_file(podcast_path)
             json_file_info = self._merge_metadata_and_path_to_json(metadata, podcast_path)
-            self._sent_to_info_kafka(file_info=json_file_info)
-        self.logger.info(f"Finish sent files.")
+            succeeded = self._sent_to_info_kafka(file_info=json_file_info)
+            if succeeded: succeeded_sum += 1
+        self.logger.info(f"Finish sent {succeeded_sum} files.")
 
 
 

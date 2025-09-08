@@ -1,5 +1,9 @@
 WAV_FILES_PATH = r"C:\Users\Menachem\Desktop\Galil\Muazin\data\podcasts"
 
+class General:
+    SUCCESS = "Succeeded!!!"
+    FAILED = "Failed!!!"
+
 class MetadataConfig:
     SIZE = "size"
     NAME = "name"
