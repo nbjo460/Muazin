@@ -21,4 +21,3 @@ class Manager:
 
         self.logger.info("Getting Data, Thread opened")
         storing_data.start()
-
