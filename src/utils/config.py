@@ -28,3 +28,6 @@ class MongoDBConfig:
     IS_ATLAS = False
     PREFIX = "mongodb+srv" if IS_ATLAS else "mongodb"
     DB_NAME = "Podcasts"
+class LoggingConfig:
+    LOGGER_NAME = "Podcast_logger"
+    INDEX_LOGS_NAME = "index_logs_name"

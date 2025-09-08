@@ -16,11 +16,11 @@ class DataRetriever:
         podcasts_metadata = self.consumer.listen_topic()
         while listener:
             podcast_metadata = next(podcasts_metadata)
-            hash_id = self._generate_unique_id(podcast_metadata)
+            podcast_id = self._generate_unique_id(podcast_metadata)
             podcast_metadata_json = self.convert_to_json(podcast_metadata)
-            self.elastic_dal.insert_podcast_data(hash_id ,podcast_metadata_json)
+            self.elastic_dal.insert_podcast_data(podcast_id ,podcast_metadata_json)
             file_path = list(podcast_metadata_json.keys())[0]
-            self.mongo_dal.upload_file(file_path, hash_id)
+            self.mongo_dal.upload_file(file_path, podcast_id)
 
 
 
