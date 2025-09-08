@@ -8,10 +8,10 @@ from src.utils.logger import Logger
 
 class DataRetriever:
     def __init__(self):
+        self.logger = Logger().get_logger()
         self.consumer = consumer.Consumer()
         self.elastic_dal = es_DAL()
         self.mongo_dal = mongo_dal()
-        self.logger = Logger().get_logger()
 
     def store_data(self):
         self.logger.info("Start listening")

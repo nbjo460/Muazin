@@ -12,15 +12,14 @@ class DAL:
 
         self.es = None
         self._create_connection()
-        self.logger.info("Connected to ElasticSearch")
 
     def _create_connection(self):
         try:
             self.logger.info("Connecting to ElasticSearch")
             self.es = Elasticsearch(self.URL)
-            self.logger.info("Connected succeed!")
+            self.logger.info("Connected to ElasticSearch")
         except Exception as e:
-            self.logger.warning("Connection Failed!!!")
+            self.logger.warning("Connection to MONGO Failed!!!")
 
     def insert_podcast_data(self, _id, podcast):
         if not self.es.indices.exists(index=self.INDEX):

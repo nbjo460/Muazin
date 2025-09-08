@@ -22,6 +22,7 @@ class KafkaConfig:
 
 class Errors:
     NO_BROKER_CONNECTION = "No broker connection."
+    NO_MONGO_CONNECTION = "No Mongo Connection."
 
 class ElasticSearchConfig:
     ELASTIC_PORT = os.getenv("ELASTIC_PORT" ,"9200")
