@@ -4,14 +4,17 @@ import shortuuid
 import json
 from src.utils.elasticsearch_util.dal import DAL as es_DAL
 from src.utils.mongo.dal import DAL as mongo_dal
+from src.utils.logger import Logger
 
 class DataRetriever:
     def __init__(self):
         self.consumer = consumer.Consumer()
         self.elastic_dal = es_DAL()
         self.mongo_dal = mongo_dal()
+        self.logger = Logger().get_logger()
 
     def store_data(self):
+        self.logger.info("Start listening")
         listener = True
         podcasts_metadata = self.consumer.listen_topic()
         while listener:

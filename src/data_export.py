@@ -3,6 +3,7 @@ from src.utils.config import MetadataConfig
 from src.utils.config import KafkaConfig
 from datetime import datetime
 from src.utils.kafka_util.producer import Producer
+from src.utils.logger import Logger
 import json
 
 
@@ -10,9 +11,11 @@ class DataExport:
     def __init__(self, podcasts_path : str):
         self.producer = Producer()
         self.podcasts_path = podcasts_path
+        self.logger = Logger().get_logger()
 
     def create_metadata(self):
         podcasts_list = self._get_list_of_files()
+        self.logger.info(f"Start sent {len(podcasts_list)} files")
         for podcast_path in podcasts_list:
             metadata = self._get_metadata_on_file(podcast_path)
             json_file_info = self._merge_metadata_and_path_to_json(metadata, podcast_path)
