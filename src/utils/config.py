@@ -1,5 +1,9 @@
 WAV_FILES_PATH = r"C:\Users\Menachem\Desktop\Galil\Muazin\data\podcasts"
 
+class General:
+    SUCCESS = "Succeeded!!!"
+    FAILED = "Failed!!!"
+
 class MetadataConfig:
     SIZE = "size"
     NAME = "name"
@@ -28,3 +32,6 @@ class MongoDBConfig:
     IS_ATLAS = False
     PREFIX = "mongodb+srv" if IS_ATLAS else "mongodb"
     DB_NAME = "Podcasts"
+class LoggingConfig:
+    LOGGER_NAME = "Podcast_logger"
+    INDEX_LOGS_NAME = "index_logs_name"

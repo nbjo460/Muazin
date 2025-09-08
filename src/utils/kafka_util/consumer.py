@@ -2,10 +2,14 @@ from kafka import KafkaConsumer
 from src.utils.config import KafkaConfig
 import json
 
+from src.utils.logger import Logger
+
+
 class Consumer:
     def __init__(self):
         self.TOPIC = KafkaConfig.FILE_DATA_TOPIC
         self.consumer = self.get_consumer_events()
+        self.logger = Logger.get_logger()
 
     def get_consumer_events(self):
         # The consumer object contains the topic name, json deserializer,Kafka servers
@@ -19,10 +23,9 @@ class Consumer:
 
 
     def listen_topic(self):
-        print(f"listen to {self.TOPIC} messages")
+        self.logger.info(f"listen to {self.TOPIC} messages")
         # Iterate through the messages
         if self.consumer is not None:
             for message in self.consumer:
-                print(message.offset, message.value)
                 yield  message.value
 

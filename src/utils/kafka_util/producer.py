@@ -11,33 +11,36 @@ import json
 from kafka import KafkaProducer, errors
 from src.utils.config import KafkaConfig, Errors
 from src.exceptions.exception import NoBrokerConnection
+from src.utils.logger import Logger
 
 class Producer:
 
     def __init__(self):
         self.url = f'{KafkaConfig.KAFKA_HOST}:{KafkaConfig.KAFKA_PORT}'
         self.producer = None
+        self.logger = Logger().get_logger()
+
 
     def get_producer_config(self):
         # The Producer object requires the Kafka server, Json serializer
         try:
             self.producer = KafkaProducer(bootstrap_servers=[self.url],
-                                 value_serializer=lambda x:
-                                 json.dumps(x).encode('utf-8'))
+                                          value_serializer=lambda x:
+                                          json.dumps(x).encode('utf-8'))
         except errors.NoBrokersAvailable as e:
             self.producer = Errors.NO_BROKER_CONNECTION
-            print(e, "Can't connect to Kafka server")
+            self.logger.warning(f"Can't connect to Kafka server. \n{e}")
 
         return self.producer
 
     # Publish json messages
-    def publish_message(self, topic, message) -> str:
+    def publish_message(self, topic, message) -> bool:
         """
         This function will publish message to the topic which is received as a parameter
         :param producer: producer object to publish the message to Kafka servers
         :param topic: The topic to which the message will be published
         :param message: The event message
-        :return: None
+        :return: True if ent the message. Else false.
         """
 
         try:
@@ -47,10 +50,10 @@ class Producer:
                 self.get_producer_config()
             self.producer.send(topic, message)
             self.producer.flush()
-            return "Success!!"
+            return True
         except NoBrokerConnection as e:
-            print(e)
-            return "Failed!"
+            self.logger.warning(f"Can't connect to Kafka server. \n{e}")
+            return False
 
 
 
