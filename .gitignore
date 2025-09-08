@@ -408,3 +408,5 @@ FodyWeavers.xsd
 /.venv/Lib
 /.venv/share
 /.venv/pyvenv.cfg
+
+/data/
