@@ -20,6 +20,9 @@ class DataExport:
             metadata = self._get_metadata_on_file(podcast_path)
             json_file_info = self._merge_metadata_and_path_to_json(metadata, podcast_path)
             self._sent_to_info_kafka(file_info=json_file_info)
+        self.logger.info(f"Finish sent files.")
+
+
 
     @staticmethod
     def _merge_metadata_and_path_to_json(metadata : dict, file_path : Path):
@@ -41,7 +44,6 @@ class DataExport:
         return podcasts_list
 
     def _sent_to_info_kafka(self, file_info : json):
-        print(f"sent {file_info}")
         succeed = self.producer.publish_message(topic=KafkaConfig.FILE_DATA_TOPIC, message=file_info)
         return succeed
 

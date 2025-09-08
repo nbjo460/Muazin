@@ -15,9 +15,10 @@ class Manager:
 
 
     def run(self):
-        self.logger.info("Exporting MetaData")
+        self.logger.info("Exporting MetaData.")
         create_data = self.data_export.create_metadata()
         storing_data = threading.Thread(target=self.data_retriever.store_data)
 
-        self.logger.info("Getting Data, Thread opened")
+        self.logger.info("Getting Data, Thread opened.")
         storing_data.start()
+
