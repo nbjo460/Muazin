@@ -32,8 +32,8 @@ class DataExport:
         :return: json
         """
         metadata[General.FULL_PATH_KEY] = str(metadata[General.FULL_PATH_KEY])
-        t = {file_name: metadata}
-        json_file_info = json.dumps(t)
+        boolshit = {file_name: metadata}
+        json_file_info = json.dumps(metadata)
         return json_file_info
 
     def _get_list_of_files(self) -> list:

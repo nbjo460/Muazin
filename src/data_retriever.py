@@ -40,7 +40,7 @@ class DataRetriever:
 
     def _add_transcription_to_metadata(self, metadata : dict, full_path : str):
         transcript =  self.stt.transcription(full_path)
-        metadata[full_path][DataRetrieverConfig.TRANSCRIPT] = transcript
+        metadata[DataRetrieverConfig.TRANSCRIPT] = transcript
         return metadata
 
 
@@ -57,3 +57,13 @@ class DataRetriever:
     def convert_to_dict(message):
         return json.loads(message)
 
+
+if __name__ == "__main__":
+    def clean_kafka():
+        consumer1 = consumer.Consumer()
+        podcasts_metadata = consumer1.listen_topic()
+        listener = True
+        while listener:
+            podcast_metadata = next(podcasts_metadata)
+            print("CLAEN" + podcast_metadata)
+    clean_kafka()
