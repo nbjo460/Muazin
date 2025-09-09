@@ -17,10 +17,10 @@ class DataRetriever:
         self.mongo_dal = mongo_dal()
 
     def store_data(self):
-        self.logger.info("Start listening")
         podcasts_metadata = self.consumer.listen_topic()
         listener = True
         while listener:
+            print("----------------------------------------------")
             podcast_metadata = next(podcasts_metadata)
             file_path, podcast_id, podcast_metadata_dict = self._extract_data(podcast_metadata)
             edited_metadata = self._add_transcription_to_metadata(podcast_metadata_dict, file_path)
