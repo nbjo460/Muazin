@@ -22,7 +22,6 @@ class DataRetriever:
         listener = True
         while listener:
             podcast_metadata = next(podcasts_metadata)
-            print("*********"+podcast_metadata+"********")
             file_path, podcast_id, podcast_metadata_dict = self._extract_data(podcast_metadata)
             edited_metadata = self._add_transcription_to_metadata(podcast_metadata_dict, file_path)
             self._store_data_to_dbs(file_path, podcast_id ,edited_metadata)
@@ -34,7 +33,6 @@ class DataRetriever:
     def _extract_data(self, _podcast_metadata):
         podcast_id = self._generate_unique_id(_podcast_metadata)
         podcast_metadata_dict = self.convert_to_dict(_podcast_metadata)
-        print(podcast_metadata_dict)
         file_path = podcast_metadata_dict[General.FULL_PATH_KEY]
         return file_path, podcast_id, podcast_metadata_dict
 
@@ -66,4 +64,8 @@ if __name__ == "__main__":
         while listener:
             podcast_metadata = next(podcasts_metadata)
             print("CLAEN" + podcast_metadata)
+    def clean_es():
+        es = es_DAL()
+        return es.delete_index()
+    print(clean_es())
     clean_kafka()
