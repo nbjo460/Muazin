@@ -25,5 +25,5 @@ class DAL:
         if not self.es.indices.exists(index=self.INDEX):
             self.logger.info(f"Creating new index {self.INDEX}")
             self.es.indices.create(index=self.INDEX)
-        response = self.es.index(index=self.INDEX, id=_id, body=podcast)
+        response = self.es.index(index=self.INDEX, id=_id, document=podcast)
         return response

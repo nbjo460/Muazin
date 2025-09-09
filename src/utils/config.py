@@ -7,6 +7,7 @@ class General:
     SUCCESS = "Succeeded!!!"
     FAILED = "Failed!!!"
     WAV_FILES_PATH = os.getenv("WAV_FILES_PATH" ,r"C:\Users\Menachem\Desktop\Galil\Muazin\data\podcasts")
+    FULL_PATH_KEY = "full_path"
 
 class MetadataConfig:
     SIZE = "size"
