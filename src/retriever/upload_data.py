@@ -3,7 +3,7 @@ from src.utils.elasticsearch_util.dal import DAL as es_DAL
 from src.utils.logger import Logger
 from src.utils.kafka_util import consumer
 
-from src.utils.config_retriever import DataRetrieverConfig, General
+from src.utils.config_retriever import General
 class UploadData:
     """
     Upload to metadata and audio files to servers.

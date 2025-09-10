@@ -1,8 +1,7 @@
-from src.retriever.data_retriever import DataRetriever
-from src.retriever.fetching_data import FetchingData
-from src.retriever.upload_data import UploadData
+from fetching_data import FetchingData
+from upload_data import UploadData
 from src.utils.logger import Logger
-from src.retriever.process.process import Processor
+from process.process import Processor
 
 class Manager:
     """
@@ -11,7 +10,6 @@ class Manager:
     Upload metadata to elastic, and podcasts to mongo.
     """
     def __init__(self):
-        self.data_retriever = DataRetriever()
         self.logger = Logger().get_logger()
         self.fetching_data = FetchingData()
         self.processor = Processor()

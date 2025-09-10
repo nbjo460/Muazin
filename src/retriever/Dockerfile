@@ -2,10 +2,12 @@ FROM python:3.11
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip3 install -r requirements.txt
-COPY ./src/export ./src/export
-COPY ../utils/elasticsearch_util utils/elasticsearch_util
-COPY ../utils/kafka_util /utils/kafka_util
+COPY ../src/retriever ./src/retriever
+RUN pip3 install -r ./src/retriever/requirements.txt
+COPY ../src/utils/elasticsearch_util ./src/utils/elasticsearch_util
+COPY ../src/utils/kafka_util ./src/utils/kafka_util
+COPY ../src/utils/config_retriever.py ./src/utils/config_retriever.py
+COPY ../src/utils/mongo ./src/utils/mongo
+COPY ../src/utils/logger.py ./src/utils/logger.py
 
-CMD ["python", "main.py"]
+CMD ["python", "src/retriever/main.py"]
