@@ -23,7 +23,7 @@ class Consumer:
 
 
     def listen_topic(self):
-        self.logger.info(f"listen to {self.TOPIC} messages")
+        self.logger.info(f"Start listen to {self.TOPIC} TOPIC")
         # Iterate through the messages
         if self.consumer is not None:
             for message in self.consumer:

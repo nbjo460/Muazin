@@ -25,5 +25,10 @@ class DAL:
         if not self.es.indices.exists(index=self.INDEX):
             self.logger.info(f"Creating new index {self.INDEX}")
             self.es.indices.create(index=self.INDEX)
-        response = self.es.index(index=self.INDEX, id=_id, body=podcast)
+        self.logger.info("Metadata uploaded to elastic.")
+        response = self.es.index(index=self.INDEX, id=_id, document=podcast)
         return response
+
+    def delete_index(self):
+        result = self.es.options(ignore_status=[400, 404]).indices.delete(index=self.INDEX)
+        return result
