@@ -18,7 +18,7 @@ class DataExport:
         succeeded_sum = 0
         for podcast_path in podcasts_list:
             metadata = self._get_metadata_on_file(podcast_path)
-            json_file_info = self._merge_metadata_and_path_to_json(metadata, Path(podcast_path).name)
+            json_file_info = self._merge_metadata_and_path_to_json(metadata)
             succeeded = self._sent_to_info_kafka(file_info=json_file_info)
             if succeeded: succeeded_sum += 1
         self.logger.info(f"Finish sent {succeeded_sum} files.")
@@ -26,13 +26,12 @@ class DataExport:
 
 
     @staticmethod
-    def _merge_metadata_and_path_to_json(metadata : dict, file_name:str):
+    def _merge_metadata_and_path_to_json(metadata : dict):
         """
         :param metadata: the metadata of the file
         :return: json
         """
         metadata[General.FULL_PATH_KEY] = str(metadata[General.FULL_PATH_KEY])
-        boolshit = {file_name: metadata}
         json_file_info = json.dumps(metadata)
         return json_file_info
 
