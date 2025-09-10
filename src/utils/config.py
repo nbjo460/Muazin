@@ -60,3 +60,7 @@ class ClassifiedConfig:
 
     HIGH_LEVEL = 70
     INDICTED_LEVEL = 50
+
+    IS_BDS = "is_bds"
+    BDS_THREAT_LEVEL = "bds_threat_level"
+    BDS_PERCENT = "bds_percent"
