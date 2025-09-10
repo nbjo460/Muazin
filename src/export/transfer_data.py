@@ -1,5 +1,5 @@
 from src.utils.kafka_util.producer import Producer
-from src.utils.config import KafkaConfig
+from src.utils.config_export import KafkaConfig
 
 class TransferData:
     def __init__(self):

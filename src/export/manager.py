@@ -16,8 +16,11 @@ class Manager:
 
     def run(self):
         self.logger.info("Detecting files.")
-        podcasts_path = self.detect_files.get_list_of_files()
-        self._run_each_file(podcasts_path)
+        try:
+            podcasts_path = self.detect_files.get_list_of_files()
+            self._run_each_file(podcasts_path)
+        except Exception() as e:
+            self.logger.warning(f"{e}    Files are GONE.")
 
     def _run_each_file(self, podcasts_paths):
         """

@@ -1,4 +1,4 @@
-from src.utils.config import General
+from src.utils.config_export import General
 from pathlib import Path
 
 class DetectFiles:

@@ -1,5 +1,5 @@
 from pathlib import Path
-from src.utils.config import MetadataConfig, General
+from src.utils.config_export import MetadataConfig, General
 from datetime import datetime
 from src.utils.logger import Logger
 import json
