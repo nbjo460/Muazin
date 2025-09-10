@@ -1,7 +1,7 @@
 import base64
 from src.utils.config import ClassifiedConfig
 from collections import Counter
-from src.process.tokenize import Tokenize
+from src.retriever.process.tokenize import Tokenize
 
 
 class Classified:

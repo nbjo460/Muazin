@@ -5,9 +5,9 @@ import json
 from src.utils.elasticsearch_util.dal import DAL as es_DAL
 from src.utils.mongo.dal import DAL as mongo_dal
 from src.utils.logger import Logger
-from stt import Stt
+from src.retriever.process.stt import Stt
 from src.utils.config import DataRetrieverConfig, General
-from src.process.classified import Classified
+from src.retriever.process.classified import Classified
 
 class DataRetriever:
     def __init__(self):
