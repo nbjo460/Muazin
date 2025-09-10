@@ -2,7 +2,6 @@ import base64
 from src.utils.config import ClassifiedConfig
 from collections import Counter
 from src.process.tokenize import Tokenize
-from trying import sum_commons
 
 
 class Classified:
@@ -48,19 +47,22 @@ class Classified:
             return sum_commons
         def count_commons(raw_text : str, keywords : str) -> int:
             sum_commons = 0
-            for word in keywords:
-                sum_commons += raw_text.count(word)
+            for word in keywords.lower().split(","):
+                count = raw_text.count(word)
+                sum_commons += count
             return sum_commons
         def _sum_unique_words(text : str) -> int:
-            split_text = text.split(",")
+            split_text = text.split(" ")
             set_text = set(split_text)
             return len(set_text)
 
         hostile_sum = count_commons(raw_text=text, keywords=self.hostile_words)
         less_hostile_sum = count_commons(raw_text=text, keywords=self.less_hostile_words) * 2
         sum_commons = hostile_sum + less_hostile_sum
-
-        bds_percent = sum_commons / _sum_unique_words(text) * 100
+        non_stop_word_avg = ClassifiedConfig.NON_STOP_WORD_AVG
+        backgrounds_words = ClassifiedConfig.BACKGROUND_WORDS
+        relative_uniques = _sum_unique_words(text) * non_stop_word_avg * backgrounds_words
+        bds_percent = sum_commons / relative_uniques * 100
         return bds_percent
 
     @staticmethod

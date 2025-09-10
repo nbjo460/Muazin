@@ -7,6 +7,7 @@ from src.utils.mongo.dal import DAL as mongo_dal
 from src.utils.logger import Logger
 from stt import Stt
 from src.utils.config import DataRetrieverConfig, General
+from src.process.classified import Classified
 
 class DataRetriever:
     def __init__(self):
@@ -15,6 +16,7 @@ class DataRetriever:
         self.stt = Stt()
         self.elastic_dal = es_DAL()
         self.mongo_dal = mongo_dal()
+        self.classified = Classified()
 
     def store_data(self):
         podcasts_metadata = self.consumer.listen_topic()
@@ -24,7 +26,14 @@ class DataRetriever:
             podcast_metadata = next(podcasts_metadata)
             file_path, podcast_id, podcast_metadata_dict = self._extract_data(podcast_metadata)
             edited_metadata = self._add_transcription_to_metadata(podcast_metadata_dict, file_path)
-            self._store_data_to_dbs(file_path, podcast_id ,edited_metadata)
+            expanded_metadata = self._expand_metadata_by_bds(edited_metadata)
+            self._store_data_to_dbs(file_path, podcast_id ,expanded_metadata)
+
+    def _expand_metadata_by_bds(self, metadata : dict):
+        text_bds = metadata[DataRetrieverConfig.TRANSCRIPT]
+        bds_dict = self.classified.classified(text_bds)
+        expanded_metadata = metadata | bds_dict
+        return expanded_metadata
 
     def _store_data_to_dbs(self, file_path : str, podcast_id : str, podcast_metadata_dict : dict):
         self.elastic_dal.insert_podcast_data(podcast_id, podcast_metadata_dict)

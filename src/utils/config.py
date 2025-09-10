@@ -64,3 +64,6 @@ class ClassifiedConfig:
     IS_BDS = "is_bds"
     BDS_THREAT_LEVEL = "bds_threat_level"
     BDS_PERCENT = "bds_percent"
+
+    NON_STOP_WORD_AVG = 0.65
+    BACKGROUND_WORDS = 0.5

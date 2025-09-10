@@ -1,7 +1,6 @@
 import threading
-from threading import Thread
 
-from src.data_export import DataExport
+from src.export.data_export import DataExport
 from src.data_retriever import DataRetriever
 from src.utils import config
 from src.utils.logger import Logger
